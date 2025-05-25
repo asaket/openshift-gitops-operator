@@ -6,12 +6,13 @@ LANG=C
 TIMEOUT_SECONDS=45
 OPERATOR_NS="openshift-gitops-operator"
 ARGO_NS="openshift-gitops"
+#GITOPS_OVERLAY=components/operators/openshift-gitops/operator/overlays/gitops-1.15/
 GITOPS_OVERLAY=components/operators/openshift-gitops/operator/overlays/latest/
 
 # shellcheck source=/dev/null
 source "$(dirname "$0")/functions.sh"
 source "$(dirname "$0")/util.sh"
-# source "$(dirname "$0")/command_flags.sh" "$@"
+source "$(dirname "$0")/command_flags.sh" "$@"
 
 apply_firmly(){
   if [ ! -f "${1}/kustomization.yaml" ]; then
@@ -22,8 +23,8 @@ apply_firmly(){
   # kludge
   until oc kustomize "${1}" --enable-helm | oc apply -f- 2>/dev/null
   do
-    echo -n "."
-    sleep 5
+    echo "."
+    sleep 10
   done
   echo ""
   # until_true oc apply -k "${1}" 2>/dev/null

@@ -1,3 +1,3 @@
 #!/bin/bash
 set -e
-$(dirname "$0")/scripts/install.sh
+$(dirname "$0")/scripts/install.sh "$@"
